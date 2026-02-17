@@ -1,0 +1,93 @@
+@use "sass:math";
+
+// ========================================
+// ブレイクポイント設定
+// ========================================
+$break-flg: 1 !default;
+$breakpoints: null;
+
+@if $break-flg == 0 {
+  // SPファースト（min-width）
+  $breakpoints: (
+    "sm": "screen and (min-width: 400px)",
+    "md": "screen and (min-width: 768px)",
+    "lg": "screen and (min-width: 1000px)",
+    "xl": "screen and (min-width: 1240px)",
+    "xxl": "screen and (min-width: 1440px)",
+  );
+} @else {
+  // PCファースト（max-width）
+  $breakpoints: (
+    "sm": "screen and (max-width: 500px)",
+    "md": "screen and (max-width: 767px)",
+    "lg": "screen and (max-width: 1000px)",
+    "xl": "screen and (max-width: 1240px)",
+    "xxl": "screen and (max-width: 1440px)",
+  );
+}
+
+// ========================================
+// レイアウト設定
+// ========================================
+$inner: 1250px;
+$design-width: 1920px; // デザインカンプの基準幅
+
+// ========================================
+// 余白設定
+// ========================================
+$padding-pc: 25px;
+$padding-sp: 20px;
+
+// ========================================
+// フォント設定
+// ========================================
+// Adobe Fonts
+$font-family-ja: "ryo-gothic-plusn", "Hiragino Sans", "Meiryo", sans-serif;
+$font-family-en: "futura-pt", "Century Gothic", arial, sans-serif;
+$font-family-base: $font-family-ja;
+$base-font-size: 16px; // prem()関数で使用する基準フォントサイズ
+$font-20-sp: clamp(16px,4.6vw,20px);
+$font-18-sp: clamp(15px,4.1vw,18px);
+$font-16-sp: clamp(12px,3.7vw,16px);
+$font-15-sp: clamp(12px,3.4vw,15px);
+$font-14-sp: clamp(11px,3.25vw,14px);
+
+// フォントウェイト (Adobe Fonts準拠)
+$font-weight-el: 200; // Extra Light
+$font-weight-l: 300; // Light
+$font-weight-r: 400; // Regular
+$font-weight-m: 500; // Medium
+$font-weight-b: 700; // Bold
+$font-weight-h: 800; // Heavy
+$font-weight-uh: 900; // Ultra Heavy
+
+// 従来のウェイト変数（互換性のため残す）
+$regular: 400;
+$medium: 500;
+$semi-bold: 600;
+$bold: 700;
+$extra-bold: 800;
+
+// ========================================
+// カラー設定
+// ========================================
+// ベースカラー
+$black: #212529;
+$white: #fff;
+$bg-beige: #e9e7e0;
+
+
+// テキストカラー
+$text-black: #212529;
+
+// メインカラー
+$main-green: #004639;
+$main-orange: #EE780C;
+
+// 濃い緑
+$dark-green: #0c3b2c;
+$dark-green-2: #213B33;
+
+// 明るい緑
+$light-green: #428d65;
+$light-green-2: #2a5c3f;

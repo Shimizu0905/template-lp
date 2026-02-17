@@ -1,0 +1,326 @@
+@use '../../foundation' as *;
+
+// ========================================
+// ドロワーメニュー
+// ========================================
+.c-drawer {
+  position: fixed;
+  z-index: 9000;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  min-height: -webkit-fill-available;
+  opacity: 0;
+  overflow: hidden;
+  transition: opacity 0.3s ease;
+  inset: 0;
+  pointer-events: none;
+
+  &.is-active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  // 白のベール（blurはここだけにする）
+  &::before {
+    position: fixed;
+    z-index: 1; // overlay(0)の上、content(2)の下
+    background: rgb(255 255 255 / 45%);
+    content: "";
+    inset: 0;
+    backdrop-filter: blur(10px);
+  }
+}
+
+// オーバーレイ（ぼかし背景）
+.c-drawer__overlay {
+  position: fixed;
+  z-index: 0;
+  width: 100%;
+  height: 100dvh;
+  background-image: url('/assets/images/fv/fv-overlay.jpg');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  inset: 0;
+  
+  // WebP対応
+  @supports (background-image: url('/assets/images/fv/fv-overlay.webp')) {
+    background-image: url('/assets/images/fv/fv-overlay.webp');
+  }
+
+  // 画像だけにする（白とblurは削除）
+  &::after {
+    position: absolute;
+    background: transparent;
+    content: "";
+    inset: 0;
+    backdrop-filter: none;
+  }
+}
+
+.c-drawer__content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 430px;
+  height: 100%;
+  min-height: 100dvh;
+  margin: 0 auto;
+  background: rgb(255 255 255 / 40%);
+  overflow-y: auto;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(-100dvh);
+  -webkit-overflow-scrolling: touch;
+
+  /* 既存paddingはOK（75pxはヘッダー分ならそのまま） */
+  padding-block: calc(env(safe-area-inset-top) + 16px)
+                 calc(env(safe-area-inset-bottom) + 16px);
+  padding-inline: 20px;
+  backdrop-filter: none;
+
+  .c-drawer.is-active & {
+    transform: translateY(0);
+  }
+}
+
+@media (height <= 630px) {
+  .c-drawer__content {
+    justify-content: flex-start;
+
+    /* 上の余白を縮める（pxよりvhの方が端末差に強い） */
+    padding-top: calc(env(safe-area-inset-top) + clamp(12px, 15vh, 50px));
+    padding-bottom: calc(env(safe-area-inset-bottom) + 50px);
+  }
+
+  /* CTAの固定marginが一番ズレ要因なので縮める */
+  .c-drawer__cta {
+    margin-top: 16px; /* 54pxはデカすぎて押し出す */
+  }
+
+  .c-drawer__social {
+    margin-top: 12px;
+    margin-bottom: 12px;
+  }
+
+  .c-drawer__item a {
+    padding: 8px 10px;
+  }
+}
+
+
+
+// メニューリスト
+.c-drawer__menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  list-style: none;
+}
+
+.c-drawer__item {
+  margin: 0;
+  padding: 0;
+}
+
+.c-drawer__item a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  color: $main-green;
+  transition: all 0.3s ease;
+
+  @media (width <= 375px) {
+    padding: prem(10);
+  }
+}
+
+.c-drawer__item a:hover {
+  color: #07913A;
+  background: rgb(0 70 57 / 5%);
+}
+
+.c-drawer__item-img {
+  width: auto;
+  max-width: 220px; 
+  height: auto;
+  object-fit: contain;
+
+  @media (width <= 375px) {
+    max-width: prem(220);
+  }
+}
+
+// 各メニュー項目の画像サイズを個別に指定
+.c-drawer__item:nth-child(1) .c-drawer__item-img {
+  height: 21.82px;
+}
+
+.c-drawer__item:nth-child(2) .c-drawer__item-img {
+  height: 18px;
+}
+
+.c-drawer__item:nth-child(3) .c-drawer__item-img {
+  height: 23.26px;
+}
+
+.c-drawer__item:nth-child(4) .c-drawer__item-img {
+  height: 46px;
+}
+
+.c-drawer__item:nth-child(5) .c-drawer__item-img {
+  height: 22.99px;
+}
+
+.c-drawer__item:nth-child(6) .c-drawer__item-img {
+  height: 18.51px;
+}
+
+.c-drawer__item:nth-child(7) .c-drawer__item-img {
+  height: 22.99px;
+}
+
+// ソーシャルアイコン
+.c-drawer__social {
+  display: flex;
+  gap: 4px;
+  margin-top: 16px;
+  margin-bottom: 16px;
+
+  @media (width <= 375px) {
+    margin-top: prem(16);
+    margin-bottom: prem(16);
+  }
+}
+
+.c-drawer__social-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  text-decoration: none;
+  color: $main-green;
+  transition: all 0.3s ease;
+
+  @media (width <= 375px) {
+    width: prem(28);
+    height: prem(28);
+  }
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+.c-drawer__social-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+// CTAボタン
+.c-drawer__cta {
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 202px;
+  margin-top: 54px;
+  padding: 12px 21px;
+  border: 1px solid $main-green;
+  border-radius: 26px;
+  background: transparent;
+  transition: all 0.3s ease;
+
+  @media (width <= 375px) {
+    max-width: prem(202);
+    margin-top: prem(54);
+    padding: prem(16) prem(21);
+    border-radius: prem(50);
+  }
+
+  a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    font-size: 18px;
+    font-weight: $font-weight-b;
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    color: $main-green;
+    transition: color 0.3s ease;
+
+    @media (width <= 375px) {
+      font-size: prem(18);
+    }
+
+    &::after {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      margin-left: 12px;
+      background-image: url('/assets/images/common/arrow-green.svg');
+      background-position: center;
+      background-size: contain;
+      background-repeat: no-repeat;
+      transition: background-image 0.3s ease;
+      content: '';
+
+      @media (width <= 375px) {
+        margin-left: prem(12);
+      }
+    }
+  }
+
+  &:hover {
+    background: $main-green;
+
+    a {
+      color: #fff;
+
+      &::after {
+        background-image: url('/assets/images/common/arrow-white.svg');
+      }
+    }
+  }
+}
+
+// レスポンシブ
+@include mq("md") {
+  .c-drawer__item a {
+    padding: 11px 10px;
+
+    @media (width <= 375px) {
+      padding: prem(11) prem(10);
+    }
+  }
+
+  .c-drawer__cta {
+    min-width: 240px;
+
+    @media (width <= 375px) {
+      min-width: prem(240);
+    }
+  }
+
+  .c-drawer__cta a {
+    font-size: 16px;
+
+    @media (width <= 375px) {
+      font-size: prem(16);
+    }
+  }
+}

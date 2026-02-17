@@ -1,0 +1,166 @@
+@use '../foundation' as *;
+
+// フッターレイアウト
+.l-footer {
+  padding: 20px 0;
+  text-align: center;
+  color: #fff;
+  background-color: #333;
+}
+
+// インナーレイアウト（コンテナの内側）
+.l-inner {
+  max-width: $inner;
+  margin: 0 auto;
+  padding: 0 40px;
+
+  @media (width <= 430px) {
+    padding: 0 9.4vw;
+  }
+}
+
+// セクションの基本レイアウト
+.l-section {
+  width: 100%;
+}
+
+// コンテンツエリア
+.l-content {
+  width: 100%;
+}
+
+// CTAエリア
+.l-cta {
+  margin-top: 60px;
+
+  @media (width <= 375px) {
+  margin-top: prem(60);
+  }
+
+  @include mq("sm") {
+    margin-top: 40px;
+
+    @media (width <= 375px) {
+    margin-top: prem(40);
+    }
+  }
+}
+
+// サイドバー付きレイアウト
+.l-sidebar {
+  display: flex;
+  gap: 40px;
+  max-width: $inner;
+  margin: 0 auto;
+  padding: 0 20px;
+
+  @media (width <= 375px) {
+    gap: prem(40);
+  padding: 0 prem(20);
+  }
+
+  @include mq("md") {
+    padding: 0 58px;
+
+    @media (width <= 375px) {
+    padding: 0 prem(58);
+    }
+  }
+}
+
+.l-sidebar__main {
+  flex: 1;
+}
+
+.l-sidebar__aside {
+  width: 300px;
+  flex-shrink: 0;
+
+  @media (width <= 375px) {
+    width: prem(300);
+  }
+}
+
+@media screen and (width <= 767px) {
+  .l-sidebar {
+    flex-direction: column;
+    gap: 30px;
+
+    @media (width <= 375px) {
+    gap: prem(30);
+    }
+  }
+
+  .l-sidebar__aside {
+    width: 100%;
+  }
+}
+
+// グリッドレイアウト
+.l-grid {
+  display: grid;
+  gap: 20px;
+
+  @media (width <= 375px) {
+  gap: prem(20);
+  }
+}
+
+.l-grid--2col {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.l-grid--3col {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.l-grid--4col {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+@media screen and (width <= 767px) {
+  .l-grid--2col,
+  .l-grid--3col,
+  .l-grid--4col {
+    grid-template-columns: 1fr;
+  }
+}
+
+// フレックスレイアウト
+.l-flex {
+  display: flex;
+}
+
+.l-flex--center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.l-flex--between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.l-flex--around {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.l-flex--column {
+  flex-direction: column;
+}
+
+@media screen and (width <= 767px) {
+  .l-flex--between,
+  .l-flex--around {
+    flex-direction: column;
+    gap: 20px;
+
+    @media (width <= 375px) {
+    gap: prem(20);
+    }
+  }
+}
